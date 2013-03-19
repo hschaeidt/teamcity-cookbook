@@ -1,0 +1,6 @@
+Bluepill.application("teamcity-build-agent") do |app|
+  app.process("teamcity-build-agent") do |process|
+    process.start_command = "/opt/TeamCity/buildAgent/bin/agent.sh start"
+    process.pid_file = "/opt/TeamCity/buildAgent/logs/buildAgent.pid"
+  end
+end

@@ -1,0 +1,6 @@
+Bluepill.application("teamcity-server") do |app|
+  app.process("teamcity-server") do |process|
+    process.start_command = "/usr/bin/env CATALINA_PID=/opt/TeamCity/logs/catalina.pid /opt/TeamCity/bin/teamcity-server.sh start"
+    process.pid_file = "/opt/TeamCity/logs/catalina.pid"
+  end
+end
