@@ -6,7 +6,6 @@ Installs TeamCity CI from JetBrains.
 
 ## Cookbooks
 
-* bluepill
 * java
 
 # Attributes

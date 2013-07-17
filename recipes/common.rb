@@ -1,4 +1,3 @@
-include_recipe "bluepill"
 include_recipe "java"
 
 archive_name = "TeamCity-#{node["teamcity_server"]["version"]}.tar.gz"
