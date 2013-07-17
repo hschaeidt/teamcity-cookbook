@@ -33,5 +33,6 @@ Used by Sever:
 
 This cookbook provides two recipes:
 
-* build_agent.rb: Installs TeamCity Build Agent. Usually should be extended.
+* build_agent.rb: Installs TeamCity Build Agent.
 * server.rb: Installs TeamCity Server.
+* default.rb: Installs TeamCity Server and TeamCity Build Agent.
