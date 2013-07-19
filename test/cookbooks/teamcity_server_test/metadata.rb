@@ -1,0 +1,7 @@
+name             "teamcity_server_test"
+maintainer       "Vyacheslav Slinko"
+maintainer_email "vyacheslav.slinko@gmail.com"
+license          "MIT"
+description      "This cookbook is used with test-kitchen to test the parent, teamcity_server cookbook."
+version          "0.1.0"
+depends          "teamcity_server"

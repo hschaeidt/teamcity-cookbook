@@ -9,6 +9,9 @@
     "minitest-handler": {
       "locked_version": "0.2.1"
     },
+    "teamcity_server_test": {
+      "path": "./test/cookbooks/teamcity_server_test"
+    },
     "java": {
       "locked_version": "1.12.0"
     },

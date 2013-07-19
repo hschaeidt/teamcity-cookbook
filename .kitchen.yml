@@ -15,4 +15,4 @@ suites:
 - name: default
   run_list:
   - recipe[minitest-handler]
-  - recipe[teamcity_server]
+  - recipe[teamcity_server_test]
