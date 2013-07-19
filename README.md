@@ -12,7 +12,7 @@ Installs TeamCity CI from JetBrains.
 
 Used by both recipes:
 
-* `node["teamcity_server"]["version"]` - TeamCity version. node is `7.1.4`.
+* `node["teamcity_server"]["version"]` - TeamCity version. Default is `8.0.1`.
 
 Used by Build Agent:
 
