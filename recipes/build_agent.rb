@@ -10,8 +10,8 @@ unless Chef::Config[:solo]
   end
 end
 
-unless node["teamcity_server"]["build_agent"]["server"]
-  Chef::Application.fatal! "Undefined TeamCity server address"
+if node["teamcity_server"]["build_agent"]["server"].nil?
+  node.default["teamcity_server"]["build_agent"]["server"] = node["ipaddress"]
 end
 
 properties_file     = "/opt/TeamCity/buildAgent/conf/buildAgent.properties"
