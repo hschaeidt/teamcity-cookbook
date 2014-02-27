@@ -13,6 +13,7 @@ Installs TeamCity CI from JetBrains.
 Used by both recipes:
 
 * `node["teamcity_server"]["version"]` - TeamCity version. Default is `8.0.1`.
+* `node["teamcity_server"]["base_url"]` - Base URL for TeamCity packages. Default is `http://download.jetbrains.com/teamcity/`.
 
 Used by Build Agent:
 
