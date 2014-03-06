@@ -14,7 +14,7 @@ if node["teamcity_server"]["build_agent"]["server"].nil?
   node.default["teamcity_server"]["build_agent"]["server"] = node["ipaddress"]
 end
 
-properties_file     = "/opt/TeamCity/buildAgent/conf/buildAgent.properties"
+properties_file     = "#{node["teamcity_server"]["root_dir"]}/buildAgent/conf/buildAgent.properties"
 server              = node["teamcity_server"]["build_agent"]["server"]
 own_address         = node["ipaddress"]
 authorization_token = nil
