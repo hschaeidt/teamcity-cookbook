@@ -43,6 +43,8 @@ end
 
 template properties_file do
   source "buildAgent.properties.erb"
+  owner  node["teamcity_server"]["user"]
+  group  node["teamcity_server"]["group"]
   variables(
     :server_address      => server,
     :name                => node["teamcity_server"]["build_agent"]["name"],
@@ -50,3 +52,5 @@ template properties_file do
     :authorization_token => authorization_token
   )
 end
+
+
