@@ -2,7 +2,7 @@ include_recipe "teamcity_server::common"
 
 unless Chef::Config[:solo]
   unless node["teamcity_server"]["build_agent"]["server"]
-    server_node = search(:node, "recipes:teamcity_server\\:\\:server").first
+    server_node = search(:node, node["teamcity_server"]["build_agent"]["search_query"]).first
 
     if server_node
       node.default["teamcity_server"]["build_agent"]["server"] = server_node["ipaddress"]
@@ -47,6 +47,7 @@ template properties_file do
   group  node["teamcity_server"]["group"]
   variables(
     :server_address      => server,
+    :server_port         => node["teamcity_server"]["server"]["port"],
     :name                => node["teamcity_server"]["build_agent"]["name"],
     :own_address         => own_address,
     :authorization_token => authorization_token
