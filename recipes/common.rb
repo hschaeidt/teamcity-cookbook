@@ -4,13 +4,13 @@ archive_name = "TeamCity-#{node["teamcity_server"]["version"]}.tar.gz"
 full_url     = "#{node["teamcity_server"]["base_url"]}#{archive_name}"
 archive      = "#{Chef::Config[:file_cache_path]}/#{archive_name}"
 
-group "teamcity" do
+group node["teamcity_server"]["group"] do
   action :create
 end
 
-user "teamcity" do
+user node["teamcity_server"]["user"] do
   action :create
-  gid "teamcity"
+  gid node["teamcity_server"]["group"]
   home node["teamcity_server"]["root_dir"]
   shell "/bin/bash"
 end
