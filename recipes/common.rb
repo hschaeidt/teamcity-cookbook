@@ -1,16 +1,5 @@
 include_recipe "java"
 
-group "teamcity" do
-	action :create
-end
-
-user "teamcity" do
-	action :create
-	gid "teamcity"
-	home node["teamcity_server"]["root_dir"]  
-	shell "/bin/bash"
-end
-
 group node["teamcity_server"]["group"] do
   action :create
 end
