@@ -1,1 +1,6 @@
 /.kitchen/
+
+#RVM
+.rvmrc
+.ruby-version
+.ruby-gemset
