@@ -54,6 +54,11 @@ agents.each do |agent, p|
     end
   end
 
+  execute "copy_buildAgent_to_#{agent}" do
+    command "cp -Rf #{node["teamcity_server"]["root_dir"]}/buildAgent #{node["teamcity_server"]["root_dir"]}/#{agent}"
+    not_if { File.directory?("#{node["teamcity_server"]["root_dir"]}/#{agent}") }
+  end
+
   template properties_file do
     source "buildAgent.properties.erb"
     owner  node["teamcity_server"]["user"]
@@ -61,7 +66,7 @@ agents.each do |agent, p|
     variables(
       :server_address      => server,
       :server_port         => node["teamcity_server"]["server"]["port"],
-      :name                => properties["name"],
+      :name                => properties["name"] || agent,
       :own_address         => own_address,
       :authorization_token => authorization_token
     )

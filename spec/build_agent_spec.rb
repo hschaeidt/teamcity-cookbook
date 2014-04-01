@@ -3,6 +3,8 @@ require 'chefspec/berkshelf'
 
 describe 'teamcity_server::build_agent' do
   let(:chef_run) do
+    File.stub(:directory?).and_call_original
+    File.should_receive(:directory?).with("/opt/TeamCity/buildAgent").and_return(true)
     ChefSpec::Runner.new do |node|
       node.set['teamcity_server']['build_agents'] = {
         'buildAgent' => {},
@@ -27,6 +29,14 @@ describe 'teamcity_server::build_agent' do
     it 'should set the build agent name attribute' do
       pending 'stub File.readlines method'
     end
+  end
+
+  it 'not to create builAgent directory for buildAgent' do
+    expect(chef_run).to_not run_execute("copy_buildAgent_to_buildAgent")
+  end
+
+  it 'not to create builAgent directory for buildAgent' do
+    expect(chef_run).to run_execute("copy_buildAgent_to_buildAgent1")
   end
 
   it 'create buildAgent.properties template for buildAgent' do
