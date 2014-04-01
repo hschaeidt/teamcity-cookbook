@@ -35,7 +35,7 @@ ownAddress=<%= @own_address %>
 ## A port that TeamCity server will use to connect to the agent.
 ## Please make sure that incoming connections for this port
 ## are allowed on the agent computer (e.g. not blocked by a firewall)
-ownPort=9090
+ownPort=<%= @port %>
 
 ## A token which is used to identify this agent on the TeamCity server.
 ## It is automatically generated and saved on the first agent connection to the server.
@@ -56,4 +56,4 @@ authorizationToken=<%= @authorization_token %>
 
 # Environment Variables
 
-#env.exampleEnvVar=example Env Value%                                                                                 
+#env.exampleEnvVar=example Env Value%
