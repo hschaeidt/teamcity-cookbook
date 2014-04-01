@@ -24,7 +24,7 @@ else
   # Convert attributes to hash for easier parsing
   JSON.parse(node["teamcity_server"]["build_agents"].to_json)
 end
-
+port = 9090
 agents.each do |agent, p|
   properties          = agent_defaults.merge(p)
   properties_file     = "#{node["teamcity_server"]["root_dir"]}/#{agent}/conf/buildAgent.properties"
@@ -70,7 +70,10 @@ agents.each do |agent, p|
       :server_port         => node["teamcity_server"]["server"]["port"],
       :name                => properties["name"] || agent,
       :own_address         => own_address,
+      :port                => properties["port"] || port,
       :authorization_token => authorization_token
     )
   end
+
+  port += 1
 end
