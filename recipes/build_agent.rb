@@ -55,7 +55,7 @@ agents.each do |agent, p|
   end
 
   execute "copy_buildAgent_to_#{agent}" do
-    command 'cp -Rf #{node["teamcity_server"]["root_dir"]}/buildAgent #{node["teamcity_server"]["root_dir"]}/#{agent}'
+    command "cp -Rf #{node["teamcity_server"]["root_dir"]}/buildAgent #{node["teamcity_server"]["root_dir"]}/#{agent}"
     not_if { File.directory?("#{node["teamcity_server"]["root_dir"]}/#{agent}") }
   end
 
