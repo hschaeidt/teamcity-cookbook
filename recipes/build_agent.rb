@@ -14,6 +14,12 @@ if node["teamcity_server"]["build_agent"]["server"].nil?
   node.default["teamcity_server"]["build_agent"]["server"] = node["ipaddress"]
 end
 
+# Create agents directory
+directory "#{node["teamcity_server"]["root_dir"]}/agents" do
+  user  node["teamcity_server"]["user"]
+  group  node["teamcity_server"]["group"]
+end
+
 # Convert attributes to hash for easier parsing
 agent_defaults = JSON.parse(node["teamcity_server"]["build_agent"].to_json)
 
@@ -27,7 +33,7 @@ end
 port = 9090
 agents.each do |agent, p|
   properties          = agent_defaults.merge(p)
-  properties_file     = "#{node["teamcity_server"]["root_dir"]}/#{agent}/conf/buildAgent.properties"
+  properties_file     = "#{node["teamcity_server"]["root_dir"]}/agents/#{agent}/conf/buildAgent.properties"
   server              = properties["server"]
   own_address         = node["ipaddress"]
   authorization_token = nil
@@ -55,10 +61,10 @@ agents.each do |agent, p|
   end
 
   execute "copy_buildAgent_to_#{agent}" do
-    command "cp -Rf #{node["teamcity_server"]["root_dir"]}/buildAgent #{node["teamcity_server"]["root_dir"]}/#{agent}"
+    command "cp -Rf #{node["teamcity_server"]["root_dir"]}/buildAgent #{node["teamcity_server"]["root_dir"]}/agents/#{agent}"
     user node["teamcity_server"]["user"]
     group node["teamcity_server"]["group"]
-    not_if { File.directory?("#{node["teamcity_server"]["root_dir"]}/#{agent}") }
+    not_if { File.directory?("#{node["teamcity_server"]["root_dir"]}/agents/#{agent}") }
   end
 
   template properties_file do

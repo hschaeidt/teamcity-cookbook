@@ -4,7 +4,7 @@ require 'chefspec/berkshelf'
 describe 'teamcity_server::build_agent' do
   let(:chef_run) do
     File.stub(:directory?).and_call_original
-    File.should_receive(:directory?).with("/opt/TeamCity/buildAgent").and_return(true)
+    File.should_receive(:directory?).with("/opt/TeamCity/agents/buildAgent").and_return(true)
     ChefSpec::Runner.new do |node|
       node.set['teamcity_server']['build_agents'] = {
         'buildAgent' => {},
@@ -19,6 +19,10 @@ describe 'teamcity_server::build_agent' do
 
   it 'update teamcity_server build_agent server attribute' do
     expect(chef_run.node['teamcity_server']['build_agent']['server']).to eq('127.0.0.1')
+  end
+
+  it 'create agents directory' do
+    expect(chef_run).to create_directory("#{chef_run.node["teamcity_server"]["root_dir"]}/agents")
   end
 
   context 'read buildAgent.properties file' do
@@ -40,10 +44,10 @@ describe 'teamcity_server::build_agent' do
   end
 
   it 'create buildAgent.properties template for buildAgent' do
-    expect(chef_run).to create_template("#{chef_run.node["teamcity_server"]["root_dir"]}/buildAgent/conf/buildAgent.properties")
+    expect(chef_run).to create_template("#{chef_run.node["teamcity_server"]["root_dir"]}/agents/buildAgent/conf/buildAgent.properties")
   end
 
   it 'create buildAgent.properties template for buildAgent1' do
-    expect(chef_run).to create_template("#{chef_run.node["teamcity_server"]["root_dir"]}/buildAgent1/conf/buildAgent.properties")
+    expect(chef_run).to create_template("#{chef_run.node["teamcity_server"]["root_dir"]}/agents/buildAgent1/conf/buildAgent.properties")
   end
 end
