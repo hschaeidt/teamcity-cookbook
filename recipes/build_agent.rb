@@ -72,8 +72,7 @@ agents.each do |agent, p|
     owner  node["teamcity_server"]["user"]
     group  node["teamcity_server"]["group"]
     variables(
-      :server_address      => server,
-      :server_port         => node["teamcity_server"]["server"]["port"],
+      :server_url          => properties["server_url"] || "http://#{server}:#{node["teamcity_server"]["server"]["port"]}/",
       :name                => properties["name"] || agent,
       :own_address         => own_address,
       :port                => properties["port"] || port,
