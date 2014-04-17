@@ -15,3 +15,4 @@ default["teamcity_server"]["server"]["database_user"]           = "teamcity"
 default["teamcity_server"]["server"]["database_pass"]           = "teamcity"
 default["teamcity_server"]["server"]["plugins"]                 = []
 default["teamcity_server"]["server"]["plugins_dir"]             = node["teamcity_server"]["root_dir"]+'/.BuildServer/plugins/'
+default["teamcity_server"]["server"]["path"]                    = nil
