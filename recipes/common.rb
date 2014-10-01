@@ -18,6 +18,20 @@ directory node["teamcity_server"]["root_dir"] do
   action :create
 end
 
+directory node["teamcity_server"]["data_dir"] do
+  owner  node["teamcity_server"]["user"]
+  group  node["teamcity_server"]["group"]
+  mode "0755"
+  action :create
+end
+
+directory "#{node["teamcity_server"]["data_dir"]}/config" do
+  owner  node["teamcity_server"]["user"]
+  group  node["teamcity_server"]["group"]
+  mode "0755"
+  action :create
+end
+
 archive_name = "TeamCity-#{node["teamcity_server"]["version"]}.tar.gz"
 full_url     = "#{node["teamcity_server"]["base_url"]}#{archive_name}"
 archive      = "#{Chef::Config[:file_cache_path]}/#{archive_name}"
@@ -37,4 +51,12 @@ execute "unarchive" do
   group  node["teamcity_server"]["group"]
   cwd node["teamcity_server"]["root_dir"]
   action :nothing
+end
+
+#create the logs dir after unarchiving in case we want to put it in there
+directory node["teamcity_server"]["logs_dir"] do
+  owner  node["teamcity_server"]["user"]
+  group  node["teamcity_server"]["group"]
+  mode "0755"
+  action :create
 end

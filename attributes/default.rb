@@ -7,12 +7,15 @@ default["teamcity_server"]["build_agent"]["server_url"]         = nil
 default["teamcity_server"]["server"]["address"]                 = "0.0.0.0"
 default["teamcity_server"]["server"]["port"]                    = 8111
 default["teamcity_server"]["root_dir"]                          = "/opt/TeamCity"
+default["teamcity_server"]["logs_dir"]                          = node["teamcity_server"]["root_dir"]+'/logs'
+default["teamcity_server"]["data_dir"]                          = "/opt/.BuildServer"
 default["teamcity_server"]["user"]                              = "teamcity"
 default["teamcity_server"]["group"]                             = "teamcity"
 
+default["teamcity_server"]["server"]["database_internal"]       = nil
 default["teamcity_server"]["server"]["database_connection_url"] = nil
 default["teamcity_server"]["server"]["database_user"]           = "teamcity"
 default["teamcity_server"]["server"]["database_pass"]           = "teamcity"
 default["teamcity_server"]["server"]["plugins"]                 = []
-default["teamcity_server"]["server"]["plugins_dir"]             = node["teamcity_server"]["root_dir"]+'/.BuildServer/plugins/'
+default["teamcity_server"]["server"]["plugins_dir"]             = node["teamcity_server"]["data_dir"]+'/plugins'
 default["teamcity_server"]["server"]["path"]                    = nil

@@ -12,7 +12,7 @@ template "#{node["teamcity_server"]["root_dir"]}/conf/server.xml" do
   )
 end
 
-template "#{node["teamcity_server"]["root_dir"]}/conf/database.properties" do
+template "#{node["teamcity_server"]["data_dir"]}/config/database.properties" do
   source "database.properties.erb"
   owner  node["teamcity_server"]["user"]
   group  node["teamcity_server"]["group"]
