@@ -1,0 +1,9 @@
+description "TeamCity Server"
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+script
+  export TEAMCITY_DATA_PATH=<%= @data_dir %>
+  exec <%= @root_dir %>/bin/teamcity-server.sh run
+end script
