@@ -23,3 +23,16 @@ template "#{node["teamcity_server"]["root_dir"]}/conf/database.properties" do
   )
   only_if { node["teamcity_server"]["server"]["database_internal"] == false }
 end
+
+# Install upstart file
+template "/etc/init/teamcity-server.conf" do
+  source "upstart/teamcity-server.erb"
+  owner  "root"
+  group  "root"
+  variables(
+      :user => node["teamcity_server"]["user"],
+      :group => node["teamcity_server"]["group"],
+      :data_dir => node["teamcity_server"]["data_dir"],
+      :root_dir => node["teamcity_server"]["root_dir"]
+  )
+end
