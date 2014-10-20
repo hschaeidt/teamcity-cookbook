@@ -6,8 +6,9 @@ end
 
 user node["teamcity_server"]["user"] do
   action :create
+  supports :manage_home => true
   gid node["teamcity_server"]["group"]
-  home node["teamcity_server"]["root_dir"]
+  home node["teamcity_server"]["home_dir"]
   shell "/bin/bash"
 end
 

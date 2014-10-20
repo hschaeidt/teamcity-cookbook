@@ -14,5 +14,6 @@ setgid <%= @group %>
 
 script
   export TEAMCITY_DATA_PATH=<%= @data_dir %>
-  exec <%= @root_dir %>/buildAgent/bin/agent.sh run
+
+  exec <%= @root_dir %>/agents/buildAgent/bin/agent.sh run
 end script

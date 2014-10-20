@@ -1,25 +1,19 @@
-{
-  "sources": {
-    "teamcity_server": {
-      "path": "."
-    },
-    "apt": {
-      "locked_version": "2.0.0"
-    },
-    "minitest-handler": {
-      "locked_version": "0.2.1"
-    },
-    "teamcity_server_test": {
-      "path": "./test/cookbooks/teamcity_server_test"
-    },
-    "java": {
-      "locked_version": "1.12.0"
-    },
-    "windows": {
-      "locked_version": "1.10.0"
-    },
-    "chef_handler": {
-      "locked_version": "1.1.4"
-    }
-  }
-}
+DEPENDENCIES
+  apt
+  minitest-handler
+  teamcity_server
+    path: .
+    metadata: true
+  teamcity_server_test
+    path: test/cookbooks/teamcity_server_test
+
+GRAPH
+  apt (2.6.0)
+  chef_handler (1.1.6)
+  java (1.28.0)
+  minitest-handler (1.3.2)
+    chef_handler (>= 0.0.0)
+  teamcity_server (0.2.2)
+    java (>= 0.0.0)
+  teamcity_server_test (0.1.0)
+    teamcity_server (>= 0.0.0)
