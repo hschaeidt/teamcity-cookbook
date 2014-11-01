@@ -1,0 +1,30 @@
+{
+	"builders": [
+		{
+			"type": "docker",
+			"image": "ubuntu",
+			"export_path": "teamcity.tar"
+		}
+	],
+	"provisioners" : [ 
+		{
+				"inline": [
+					"apt-get update",
+					"apt-get -y install curl"
+				],
+				"type": "shell"
+			},
+			{
+			"type": "chef-solo",
+				"cookbook_paths": [ "berks-cookbooks" ],
+				"run_list": [ "teamcity::default" ]
+			}
+	],
+	"post-processors": [
+		{
+			"type": "docker-import",
+			"repository": "hschaeidt/teamcity",
+			"tag": "latest"
+		}
+	]
+}
