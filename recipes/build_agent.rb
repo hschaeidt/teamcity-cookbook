@@ -1,4 +1,4 @@
-include_recipe "teamcity_server::common"
+include_recipe "teamcity::common"
 
 unless Chef::Config[:solo]
   unless node["teamcity_server"]["build_agent"]["server"]

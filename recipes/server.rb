@@ -1,4 +1,4 @@
-include_recipe "teamcity_server::common"
+include_recipe "teamcity::common"
 
 template "#{node["teamcity_server"]["root_dir"]}/conf/server.xml" do
   source "server.xml.erb"

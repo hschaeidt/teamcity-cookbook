@@ -1,3 +1,3 @@
-include_recipe "teamcity_server::server"
-include_recipe "teamcity_server::build_agent"
-include_recipe "teamcity_server::plugins"
+include_recipe "teamcity::server"
+include_recipe "teamcity::build_agent"
+include_recipe "teamcity::plugins"
