@@ -1,4 +1,4 @@
-name             "teamcity_server"
+name             "teamcity"
 maintainer       "Vyacheslav Slinko"
 maintainer_email "vyacheslav.slinko@gmail.com"
 license          "MIT"

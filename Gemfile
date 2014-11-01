@@ -15,3 +15,5 @@ group :dev do
     '= 2.11.6' # http://stackoverflow.com/a/15855623
   gem 'rake'
 end
+gem 'test-kitchen'
+gem 'kitchen-vagrant'
