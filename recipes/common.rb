@@ -1,5 +1,3 @@
-include_recipe "teamcity::java"
-
 group node["teamcity_server"]["group"] do
   action :create
 end
