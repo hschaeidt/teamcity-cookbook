@@ -3,28 +3,42 @@
 		{
 			"type": "docker",
 			"image": "ubuntu",
-			"export_path": "teamcity.tar"
+			"commit": "true"
 		}
 	],
 	"provisioners" : [ 
 		{
-				"inline": [
-					"apt-get update",
-					"apt-get -y install curl"
-				],
-				"type": "shell"
-			},
-			{
+			"inline": [
+				"apt-get update",
+				"apt-get -y install curl"
+			],
+			"type": "shell"
+		},
+		{
 			"type": "chef-solo",
 				"cookbook_paths": [ "berks-cookbooks" ],
 				"run_list": [ "teamcity::default" ]
+			},
+			{
+				"inline": [
+					"rm -rf /opt/chef",
+					"rm -rf /var/chef",
+					"rm -rf /etc/chef",
+					"rm -rf /tmp/*",
+					"for P in /usr/bin/chef-*; do [ -e \"$P\" ] && sudo rm -f \"$P\"; done",
+					"sudo rm -f /usr/bin/knife /usr/bin/ohai /usr/bin/shef",
+					"apt-get clean"
+				],
+				"type": "shell"
 			}
 	],
 	"post-processors": [
-		{
-			"type": "docker-import",
-			"repository": "hschaeidt/teamcity",
-			"tag": "latest"
-		}
+		[
+			{
+				"type": "docker-tag",
+				"repository": "hash/teamcity",
+				"tag": "latest"
+			}
+		]
 	]
 }

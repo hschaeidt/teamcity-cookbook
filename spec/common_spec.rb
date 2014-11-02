@@ -1,17 +1,13 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 
-describe 'teamcity_server::common' do
-  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+describe 'teamcity::common' do
+  let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
 
   before do
     @archive_name = "TeamCity-#{chef_run.node["teamcity_server"]["version"]}.tar.gz"
     @full_url     = "#{chef_run.node["teamcity_server"]["base_url"]}#{@archive_name}"
     @archive      = "#{Chef::Config[:file_cache_path]}/#{@archive_name}"
-  end
-
-  it 'include java::default recipe' do
-    expect(chef_run).to include_recipe('java::default')
   end
 
   it 'create teamcity group' do

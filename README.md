@@ -1,6 +1,6 @@
-# Description
+# TeamCity Cookbook
 
-Installs TeamCity CI from JetBrains.
+[![Build Status](https://travis-ci.org/hschaeidt/teamcity.svg?branch=master)](https://travis-ci.org/hschaeidt/teamcity)
 
 # Requirements
 
@@ -10,7 +10,7 @@ Installs TeamCity CI from JetBrains.
 
 Used by both recipes:
 
-* `node["teamcity_server"]["version"]` - TeamCity version. Default is `8.0.1`.
+* `node["teamcity_server"]["version"]` - TeamCity version. Default is `8.1.1`.
 * `node["teamcity_server"]["base_url"]` - Base URL for TeamCity packages.
 Default is `http://download.jetbrains.com/teamcity/`.
 This value may also use FTP (ftp://) or local (file://) (e.g., a shared folder).

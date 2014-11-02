@@ -1,19 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'chef'
+gem 'chefspec',   '~> 4.0'
+gem 'berkshelf',  '~> 3.1'
+gem 'rake'
 
-group :dev do
-  gem "strainer",
-    :git => "git://github.com/customink/strainer.git"
-  gem 'foodcritic',
-    '~> 1.7.0'
-  gem "chefspec",
-    :git => "git://github.com/acrmp/chefspec.git"
-  gem 'knife-spec'
-  gem "fauxhai"
-  gem 'gherkin',
-    '= 2.11.6' # http://stackoverflow.com/a/15855623
-  gem 'rake'
+group :integration do
+  gem 'test-kitchen',    '~> 1.2'
+  gem 'kitchen-vagrant', '~> 0.14'
 end
-gem 'test-kitchen'
-gem 'kitchen-vagrant'

@@ -1,11 +1,11 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 
-describe 'teamcity_server::server' do
-  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+describe 'teamcity::server' do
+  let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
 
   it 'include teamcity_server::common recipe' do
-    expect(chef_run).to include_recipe('teamcity_server::common')
+    expect(chef_run).to include_recipe('teamcity::common')
   end
 
   it 'create server.xml template' do

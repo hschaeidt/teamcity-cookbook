@@ -1,11 +1,11 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 
-describe 'teamcity_server::build_agent' do
+describe 'teamcity::build_agent' do
   let(:chef_run) do
     File.stub(:directory?).and_call_original
     File.should_receive(:directory?).with("/opt/TeamCity/agents/buildAgent").and_return(true)
-    ChefSpec::Runner.new do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.set['teamcity_server']['build_agents'] = {
         'buildAgent' => {},
         'buildAgent1' => {}
@@ -14,7 +14,7 @@ describe 'teamcity_server::build_agent' do
   end
 
   it 'include teamcity_server::common recipe' do
-    expect(chef_run).to include_recipe('teamcity_server::common')
+    expect(chef_run).to include_recipe('teamcity::common')
   end
 
   it 'update teamcity_server build_agent server attribute' do
@@ -23,16 +23,6 @@ describe 'teamcity_server::build_agent' do
 
   it 'create agents directory' do
     expect(chef_run).to create_directory("#{chef_run.node["teamcity_server"]["root_dir"]}/agents")
-  end
-
-  context 'read buildAgent.properties file' do
-    it 'should set the authorization_token variable' do
-      pending 'stub File.readlines method'
-    end
-
-    it 'should set the build agent name attribute' do
-      pending 'stub File.readlines method'
-    end
   end
 
   it 'not to create builAgent directory for buildAgent' do
