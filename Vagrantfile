@@ -83,6 +83,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
 
     chef.run_list = [
+    # Remove the apt repository if you are going to change platform
+      'recipe[apt::default]',
+      'recipe[teamcity::java]',
       'recipe[teamcity::default]'
     ]
   end
