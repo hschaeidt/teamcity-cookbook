@@ -1,8 +1,8 @@
-include_recipe "teamcity_server::common"
+include_recipe "teamcity::common"
 
 unless Chef::Config[:solo]
   unless node["teamcity_server"]["build_agent"]["server"]
-    server_node = search(:node, "recipes:teamcity_server\\:\\:server").first
+    server_node = search(:node, node["teamcity_server"]["build_agent"]["search_query"]).first
 
     if server_node
       node.default["teamcity_server"]["build_agent"]["server"] = server_node["ipaddress"]
@@ -14,39 +14,85 @@ if node["teamcity_server"]["build_agent"]["server"].nil?
   node.default["teamcity_server"]["build_agent"]["server"] = node["ipaddress"]
 end
 
-properties_file     = "/opt/TeamCity/buildAgent/conf/buildAgent.properties"
-server              = node["teamcity_server"]["build_agent"]["server"]
-own_address         = node["ipaddress"]
-authorization_token = nil
-
-if server == own_address
-  server = own_address = "127.0.0.1"
+# Create agents directory
+directory "#{node["teamcity_server"]["root_dir"]}/agents" do
+  user  node["teamcity_server"]["user"]
+  group  node["teamcity_server"]["group"]
 end
 
-if File.exists?(properties_file)
-  lines = File.readlines(properties_file).grep(/^authorizationToken=/)
+# Convert attributes to hash for easier parsing
+agent_defaults = JSON.parse(node["teamcity_server"]["build_agent"].to_json)
 
-  unless lines.empty?
-    match = /authorizationToken=([0-9a-f]+)/.match(lines.first)
-    authorization_token = match[1] if match
+agents = if node["teamcity_server"]["build_agents"].nil?
+  # If necessary, create a build_agents entry.
+  { "buildAgent" => agent_defaults }
+else
+  # Convert attributes to hash for easier parsing
+  JSON.parse(node["teamcity_server"]["build_agents"].to_json)
+end
+port = 9090
+agents.each do |agent, p|
+  properties          = agent_defaults.merge(p)
+  properties_file     = "#{node["teamcity_server"]["root_dir"]}/agents/#{agent}/conf/buildAgent.properties"
+  server              = properties["server"]
+  own_address         = node["ipaddress"]
+  authorization_token = nil
+
+  if server == own_address
+    server = own_address = "127.0.0.1"
   end
 
-  unless node["teamcity_server"]["build_agent"]["name"]
-    lines = File.readlines(properties_file).grep(/^name=/)
+  if File.exists?(properties_file)
+    lines = File.readlines(properties_file).grep(/^authorizationToken=/)
 
     unless lines.empty?
-      match = /name=(.+)/.match(lines.first)
-      node.default["teamcity_server"]["build_agent"]["name"] = match[1].strip if match
+      match = /authorizationToken=([0-9a-f]+)/.match(lines.first)
+      authorization_token = match[1] if match
+    end
+
+    unless properties["name"]
+      lines = File.readlines(properties_file).grep(/^name=/)
+
+      unless lines.empty?
+        match = /name=(.+)/.match(lines.first)
+        properties["name"] = match[1].strip if match
+      end
     end
   end
+
+  execute "copy_buildAgent_to_#{agent}" do
+    command "cp -Rf #{node["teamcity_server"]["root_dir"]}/buildAgent #{node["teamcity_server"]["root_dir"]}/agents/#{agent}"
+    user node["teamcity_server"]["user"]
+    group node["teamcity_server"]["group"]
+    not_if { File.directory?("#{node["teamcity_server"]["root_dir"]}/agents/#{agent}") }
+  end
+
+  template properties_file do
+    source "buildAgent.properties.erb"
+    owner  node["teamcity_server"]["user"]
+    group  node["teamcity_server"]["group"]
+    variables(
+      :server_url          => properties["server_url"] || "http://#{server}:#{node["teamcity_server"]["server"]["port"]}/",
+      :name                => properties["name"] || agent,
+      :own_address         => own_address,
+      :port                => properties["port"] || port,
+      :authorization_token => authorization_token
+    )
+  end
+
+  port += 1
 end
 
-template properties_file do
-  source "buildAgent.properties.erb"
+
+# Install upstart file
+template "/etc/init/teamcity-agent.conf" do
+  source "upstart/teamcity-agent.erb"
+  owner  "root"
+  group  "root"
   variables(
-    :server_address      => server,
-    :name                => node["teamcity_server"]["build_agent"]["name"],
-    :own_address         => own_address,
-    :authorization_token => authorization_token
+      :user => node["teamcity_server"]["user"],
+      :group => node["teamcity_server"]["group"],
+      :data_dir => node["teamcity_server"]["data_dir"],
+      :root_dir => node["teamcity_server"]["root_dir"]
   )
 end

@@ -127,6 +127,9 @@
 
       <Host name="localhost"  appBase="webapps"
             unpackWARs="true" autoDeploy="true">
+        <% if @path -%>
+        <Context path="/<%= @path %>" docBase="<%= @docbase %>/webapps/ROOT" debug="0" reloadable="true" />
+        <% end -%>
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->

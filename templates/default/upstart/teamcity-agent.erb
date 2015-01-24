@@ -1,0 +1,21 @@
+description "TeamCity Agent"
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+# TeamCity can take a while to shutdown
+kill timeout 30
+
+respawn
+respawn limit 15 5
+
+setuid <%= @user %>
+setgid <%= @group %>
+
+script
+  export TEAMCITY_DATA_PATH=<%= @data_dir %>
+  if [ -f ~<%= @user %>/.bashrc ]; then
+    . ~<%= @user %>/.bashrc
+  fi
+  exec <%= @root_dir %>/agents/buildAgent/bin/agent.sh run
+end script

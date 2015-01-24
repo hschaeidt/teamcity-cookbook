@@ -1,0 +1,18 @@
+description "TeamCity Server"
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+# TeamCity can take a while to shutdown
+kill timeout 30
+
+respawn
+respawn limit 15 5
+
+setuid <%= @user %>
+setgid <%= @group %>
+
+script
+  export TEAMCITY_DATA_PATH=<%= @data_dir %>
+  exec <%= @root_dir %>/bin/teamcity-server.sh run
+end script

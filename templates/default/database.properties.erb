@@ -1,0 +1,19 @@
+# See documentation at http://www.jetbrains.net/confluence/display/TCD8/Setting+up+an+External+Database
+
+connectionUrl=<%= @database_connection_url %>
+connectionProperties.user=<%= @database_user %>
+connectionProperties.password=<%= @database_pass %>
+
+# This option, when it is set to "true",
+# allows to reduce memory usage on large query results.
+# Should only be used if jdbc driver has version more than 5.0.6.
+# connectionProperties.useCursorFetch=true
+
+# The maximum number of connections TeamCity can open on database server.
+maxConnections=50
+
+# Specifies whether TeamCity should check each jdbc connection before use.
+# It reduces the system performace but avoids cases when the system uses
+# a connection that was closed by database server due to time out or this
+# connection was broken at the previous operation.
+testOnBorrow=true
