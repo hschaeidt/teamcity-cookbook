@@ -33,7 +33,7 @@ end
 
 archive_name = "TeamCity-#{node["teamcity_server"]["version"]}.tar.gz"
 full_url     = "#{node["teamcity_server"]["base_url"]}#{archive_name}"
-archive      = "#{Chef::Config[:file_cache_path]}/#{archive_name}"
+archive      = node["teamcity_server"]["archive_path"].nil? ? "#{Chef::Config[:file_cache_path]}/#{archive_name}" : "#{node["teamcity_server"]["archive_path"]}/#{archive_name}"
 
 remote_file archive do
   backup false
