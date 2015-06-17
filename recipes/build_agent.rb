@@ -92,7 +92,17 @@ template "/etc/init/teamcity-agent.conf" do
   variables(
       :user => node["teamcity_server"]["user"],
       :group => node["teamcity_server"]["group"],
-      :data_dir => node["teamcity_server"]["data_dir"],
+      :data_dir => node["teamcity_server"]["data_dir"]
+  )
+end
+
+template "/etc/init/teamcity-agents.conf" do
+  source "upstart/teamcity-agents.erb"
+  owner  "root"
+  group  "root"
+  variables(
+      :user => node["teamcity_server"]["user"],
+      :group => node["teamcity_server"]["group"],
       :root_dir => node["teamcity_server"]["root_dir"]
   )
 end

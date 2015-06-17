@@ -1,0 +1,14 @@
+description "Manages TeamCity build agent processes"
+
+# This starts upon bootup and stops on shutdown
+start on runlevel [2345]
+stop on runlevel [06]
+
+env PROCESS_NUM=0
+
+pre-start script
+  for d in <%= @root_dir %>/agents/*/ ; do
+    start teamcity-agent dir=$d processnum=$PROCESS_NUM
+    PROCESS_NUM=$((PROCESS_NUM + 1))
+  done
+end script
