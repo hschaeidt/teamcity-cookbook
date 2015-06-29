@@ -13,6 +13,9 @@ setuid <%= @user %>
 setgid <%= @group %>
 
 script
+  export TEAMCITY_SERVER_MEM_OPTS=<%= @server_mem_opts %>
+  export TEAMCITY_SERVER_OPTS=<%= @server_opts %>
   export TEAMCITY_DATA_PATH=<%= @data_dir %>
+  export TEAMCITY_PREPARE_SCRIPT=<%= @prepare_script %>
   exec <%= @root_dir %>/bin/teamcity-server.sh run
 end script

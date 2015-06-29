@@ -13,6 +13,9 @@ default["teamcity_server"]["user"]                              = "teamcity"
 default["teamcity_server"]["group"]                             = "teamcity"
 default["teamcity_server"]["home_dir"]                          = node["teamcity_server"]["root_dir"]
 default["teamcity_server"]["archive_path"]                      = nil
+default["teamcity_server"]["server_opts"]                       = nil
+default["teamcity_server"]["server_mem_opts"]                   = nil
+default["teamcity_server"]["server_prepare_script"]             = nil
 
 default["teamcity_server"]["server"]["database_internal"]       = nil
 default["teamcity_server"]["server"]["database_connection_url"] = nil
