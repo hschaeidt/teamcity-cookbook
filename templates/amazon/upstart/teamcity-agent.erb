@@ -11,16 +11,12 @@ respawn limit 15 5
 
 instance teamcity-agent-${processnum}
 
-# XXX: need upstart 1.4+
-#setuid <%= @user %>
-#setgid <%= @group %>
-
 script
   export TEAMCITY_DATA_PATH=<%= @data_dir %>
   if [ -f ~<%= @user %>/.bashrc ]; then
     . ~<%= @user %>/.bashrc
   fi
-  exec ${dir}bin/agent.sh run
+  exec su -s /bin/sh -c 'exec "$0" "$@"' <%= @user %> -- ${dir}bin/agent.sh run
 end script
 
 pre-stop script
@@ -29,5 +25,5 @@ pre-stop script
     . ~<%= @user %>/.bashrc
   fi
 
-  exec ${dir}bin/agent.sh stop
+  exec su -s /bin/sh -c 'exec "$0" "$@"' <%= @user %> -- ${dir}bin/agent.sh stop
 end script
