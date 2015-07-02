@@ -1,0 +1,29 @@
+description "TeamCity Agent"
+
+# no "start on", we don't want to automatically start
+stop on (stopping teamcity-agents or runlevel [06])
+
+# TeamCity can take a while to shutdown
+kill timeout 30
+
+respawn
+respawn limit 15 5
+
+instance teamcity-agent-${processnum}
+
+script
+  export TEAMCITY_DATA_PATH=<%= @data_dir %>
+  if [ -f ~<%= @user %>/.bashrc ]; then
+    . ~<%= @user %>/.bashrc
+  fi
+  exec su -s /bin/sh -c 'exec "$0" "$@"' <%= @user %> -- ${dir}bin/agent.sh run
+end script
+
+pre-stop script
+  export TEAMCITY_DATA_PATH=<%= @data_dir %>
+  if [ -f ~<%= @user %>/.bashrc ]; then
+    . ~<%= @user %>/.bashrc
+  fi
+
+  exec su -s /bin/sh -c 'exec "$0" "$@"' <%= @user %> -- ${dir}bin/agent.sh stop
+end script
