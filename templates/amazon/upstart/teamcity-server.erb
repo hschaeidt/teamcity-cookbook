@@ -10,6 +10,9 @@ respawn
 respawn limit 15 5
 
 script
-  export TEAMCITY_DATA_PATH=<%= @data_dir %>
+  export TEAMCITY_SERVER_MEM_OPTS="<%= @server_mem_opts %>"
+  export TEAMCITY_SERVER_OPTS="<%= @server_opts %>"
+  export TEAMCITY_DATA_PATH="<%= @data_dir %>"
+  export TEAMCITY_PREPARE_SCRIPT="<%= @prepare_script %>"
   exec su -s /bin/sh -c 'exec "$0" "$@"' <%= @user %> -- <%= @root_dir %>/bin/teamcity-server.sh run
 end script
