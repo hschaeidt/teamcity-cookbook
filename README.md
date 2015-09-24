@@ -22,6 +22,8 @@ Used by Build Agent:
   recipe `teamcity_server::server`.
 * `node["teamcity_server"]["build_agent"]["name"]` - Build Agent name. Default
   is `nil`.
+* `node["teamcity_server"]["build_agent"]["params"]` - Build Agent parameters.
+  Default is `{}`.
 
 Used by Sever:
 

@@ -76,6 +76,7 @@ agents.each do |agent, p|
       :name                => properties["name"] || agent,
       :own_address         => own_address,
       :port                => properties["port"] || port,
+      :params              => properties["params"],
       :authorization_token => authorization_token
     )
   end
