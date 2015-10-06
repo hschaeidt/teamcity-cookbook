@@ -1,6 +1,6 @@
 # TeamCity Cookbook
 
-[![Build Status](https://travis-ci.org/hschaeidt/teamcity.svg?branch=master)](https://travis-ci.org/hschaeidt/teamcity)
+[![Build Status](https://travis-ci.org/hschaeidt/teamcity-cookbook.svg)](https://travis-ci.org/hschaeidt/teamcity-cookbook)
 
 # Requirements
 
