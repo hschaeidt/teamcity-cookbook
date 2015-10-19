@@ -32,6 +32,9 @@ template "/etc/init/teamcity-server.conf" do
   variables(
       :user => node["teamcity_server"]["user"],
       :group => node["teamcity_server"]["group"],
+      :server_opts => node["teamcity_server"]["server_opts"],
+      :server_mem_opts => node["teamcity_server"]["server_mem_opts"],
+      :prepare_script => node["teamcity_server"]["server_prepare_script"],
       :data_dir => node["teamcity_server"]["data_dir"],
       :root_dir => node["teamcity_server"]["root_dir"]
   )

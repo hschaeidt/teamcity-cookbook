@@ -76,6 +76,7 @@ agents.each do |agent, p|
       :name                => properties["name"] || agent,
       :own_address         => own_address,
       :port                => properties["port"] || port,
+      :params              => properties["params"],
       :authorization_token => authorization_token
     )
   end
@@ -92,7 +93,17 @@ template "/etc/init/teamcity-agent.conf" do
   variables(
       :user => node["teamcity_server"]["user"],
       :group => node["teamcity_server"]["group"],
-      :data_dir => node["teamcity_server"]["data_dir"],
+      :data_dir => node["teamcity_server"]["data_dir"]
+  )
+end
+
+template "/etc/init/teamcity-agents.conf" do
+  source "upstart/teamcity-agents.erb"
+  owner  "root"
+  group  "root"
+  variables(
+      :user => node["teamcity_server"]["user"],
+      :group => node["teamcity_server"]["group"],
       :root_dir => node["teamcity_server"]["root_dir"]
   )
 end

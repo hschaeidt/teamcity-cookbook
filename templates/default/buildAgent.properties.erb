@@ -50,10 +50,6 @@ authorizationToken=<%= @authorization_token %>
 ## Note that value should be properly escaped. (use "\\" to represent single backslash ("\"))
 ## More on file structure: http://java.sun.com/j2se/1.5.0/docs/api/java/util/Properties.html#load(java.io.InputStream)
 
-# Build Script Properties
-
-#system.exampleProperty=example Value
-
-# Environment Variables
-
-#env.exampleEnvVar=example Env Value%
+<% @params.each do |k, v| %>
+<%= k %>=<%= v %>
+<% end %>
